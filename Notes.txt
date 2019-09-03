@@ -46,3 +46,12 @@ HOW TO USE ELOQUENT ACCESSORS
 HOW TO FORMATE TIMESTAMP 
 
 HOW TO USE EAGER LOADING (Alleviates N + 1 query problem)
+-----------
+
+HTTPS REQUREST (clean form validation)
+$ php artisan make:requrest AskQuestionRequest
+
+DISPLAYING ROUTE
+$ php artisan route:list 
+$ php artisan route:list --name=questions.index
+
