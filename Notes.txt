@@ -27,3 +27,14 @@ $ php artisan tinker
 check user table in database 
 
 
+DATABASE SEEDING 
+Because questions and user table has dependency. Run below command: 
+$ php artisan make:imgrate:fresh --seed
+
+MAKE QUESTIONS CONTROLLER 
+$ php artisan make:controller QuestionsController --resource
+
+PAGINATION
+$ php artisan vendor:publish --tag=laravel-pagination
+check in /resources/views/vendor/pagination/bootstrap-4.blade.php
+
