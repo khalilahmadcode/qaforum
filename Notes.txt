@@ -1,0 +1,29 @@
+1. Authentication: 
+- User 
+
+2. Model 
+User.php
+Question.php
+
+3. Generate data using Faker : /database/factories/
+ -  craete faker command: 
+    $ php artisan make:factory QuestionFactory 
+    find the QuestionFactory.php in the above directory 
+ -  There is already Factory for User as UserFactory.php
+
+4. Tinker and Faker
+ $ php artisan tinker 
+ >>> use Faker\factory
+ >>> $faker=Factory::create()
+ >>> $faker->sentence() // create a random sentence 
+ >>> $faker->sentences(3)
+ >>> $faker->paragraph() //create a random paragraph
+ >>> $faker->paragraphs(5) 
+
+
+FAKE USER 
+$ php artisan tinker 
+>>>factory(App\Factory::class, 3)->create()
+check user table in database 
+
+
