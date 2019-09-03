@@ -38,3 +38,11 @@ PAGINATION
 $ php artisan vendor:publish --tag=laravel-pagination
 check in /resources/views/vendor/pagination/bootstrap-4.blade.php
 
+MAKE CONTROLLER 
+$ php artisan make:controller QuestionsController --resource --model=Question
+--------------------------------------
+HOW TO USE ELOQUENT ACCESSORS
+
+HOW TO FORMATE TIMESTAMP 
+
+HOW TO USE EAGER LOADING (Alleviates N + 1 query problem)

@@ -11,7 +11,7 @@
                     @foreach ($questions as $question)
                         <div class="media">
                             <div class="media-body">
-                                <h3 class="mt-0">{{ $question->title }}</h3>
+                                <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
                                 
                                 <p class="lead">
                                     Asked By 
@@ -19,10 +19,9 @@
                                     <small class="text-muted">{{ $question->created_date }}</small>
                                 </p>
 
-                                {{ str_limit($question->body, 250) }} <a href="{{ $question->url }}"> Read more</a>
+                                {{ str_limit($question->body, 250) }}
                             </div>
                         </div>
-                        <hr>
                     @endforeach
                     <div class="mx-auto">
                         {{ $questions->links() }}
