@@ -5,27 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">All Questions</div>
-
-                <div class="card-body">
-                    @foreach ($questions as $question)
-                        <div class="media">
-                            <div class="media-body">
-                                <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
-                                
-                                <p class="lead">
-                                    Asked By 
-                                    <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
-                                    <small class="text-muted">{{ $question->created_date }}</small>
-                                </p>
-
-                                {{ str_limit($question->body, 250) }}
-                            </div>
+                <div class="card-header">
+                    <div class="d-flex align-item-center">
+                        <h1>{{ $question->title }}</h1>
+                        <div class="ml-auto">
+                            <a href="{{ route('questions.index') }}" class="btn btn-outline-secondary">Back to all Question</a>
                         </div>
-                    @endforeach
-                    <div class="mx-auto">
-                        {{ $questions->links() }}
                     </div>
+                </div>
+
+                <div class="card-body text-justify">
+                    {!! $question->body_html !!}
                 </div>
             </div>
         </div>

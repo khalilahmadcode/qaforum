@@ -52,7 +52,7 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //return view('questions.show')->with(); 
+        return view('questions.show')->with('question', $question); 
     }
 
     /**
@@ -93,6 +93,7 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $question->delete(); 
+        return redirect('/questions')->with('success', 'Your question has been deleted.'); 
     }
 }
