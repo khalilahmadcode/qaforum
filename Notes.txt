@@ -55,3 +55,10 @@ DISPLAYING ROUTE
 $ php artisan route:list 
 $ php artisan route:list --name=questions.index
 
+******************************************************************************************************
+Authorization using Policy
+-------------------------
+$ php artisan make:policy QuestionPolicy --model=Question
+find the file : /App/Policies/QuestionPolicy 
+
+******************************************************************************************************
