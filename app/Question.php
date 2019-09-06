@@ -2,6 +2,7 @@
 
 namespace App;
 use App\User; 
+use App\Answer; 
 use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
@@ -14,22 +15,30 @@ class Question extends Model
         return $this->belongsTo(User::class); 
     } 
 
-    // setting title and slug
+    // Relationship to Answer
+    public function answers() {
+        return $this->hasMany(Answer::class); 
+    }
+
+    // Setting title and slug 
     public function setTitleAttribute($value) {
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = str_slug($value); 
     }
 
+    // Question show url used in blade
     public function getUrlAttribute() {
         return route('questions.show', $this->slug); 
     }
 
+    // Question Created date used in blade
     public function getCreatedDateAttribute() {
         return $this->created_at->diffForHumans();  
     }
 
+    // Question Status style used in blade.
     public function getStatusAttribute() {
-        if($this->answers > 0) {
+        if($this->answers_count > 0) {
             if($this->best_answer_id) {
                 return "answered-accepted";  
             }
@@ -38,6 +47,7 @@ class Question extends Model
         return "unanswered"; 
     }
 
+    // Display question body as html format used in blade.
     public function getBodyHtmlAttribute () {
         return \Parsedown::instance()->text($this->body); 
     }

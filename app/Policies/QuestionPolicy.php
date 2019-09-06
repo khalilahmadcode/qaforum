@@ -18,7 +18,7 @@ class QuestionPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        // Authentication not required
     }
 
     /**
@@ -30,7 +30,7 @@ class QuestionPolicy
      */
     public function view(User $user, Question $question)
     {
-        //
+        // Authentication not required
     }
 
     /**
@@ -41,7 +41,7 @@ class QuestionPolicy
      */
     public function create(User $user)
     {
-        //
+        // Authentication not required
     }
 
     /**
@@ -53,6 +53,7 @@ class QuestionPolicy
      */
     public function update(User $user, Question $question)
     {
+        // Authenticate update/edit actions
         return $user->id == $question->user_id; 
     }
 
@@ -65,6 +66,7 @@ class QuestionPolicy
      */
     public function delete(User $user, Question $question)
     {
+        // Authenticate delete action
         return $user->id == $question->user_id && $question->answers < 1; 
     }
 
@@ -77,7 +79,7 @@ class QuestionPolicy
      */
     public function restore(User $user, Question $question)
     {
-        //
+        // Authentication not required
     }
 
     /**
@@ -88,7 +90,7 @@ class QuestionPolicy
      * @return mixed
      */
     public function forceDelete(User $user, Question $question)
-    {
-        //
+    { 
+        // Authentication not required
     }
 }

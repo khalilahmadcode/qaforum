@@ -62,3 +62,14 @@ $ php artisan make:policy QuestionPolicy --model=Question
 find the file : /App/Policies/QuestionPolicy 
 
 ******************************************************************************************************
+
+ANSWERS
+-------------
+1. Create Schema 
+$ php artisan make:model Answer -m
+
+rename column: 
+$ php artisan make:migration rename_answers_in_questions_table --table=questions
+-- install Doctorin dependency--
+$ composer require doctrine/dbal
+

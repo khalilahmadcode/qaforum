@@ -20,7 +20,10 @@ class QuestionsController extends Controller
      */
     public function index()
     {
+        // Get all question by latest, 5 question every page. 
         $questions = Question::latest()->paginate(5); 
+
+        // Display all question
         return view('questions.index')->with('questions', $questions);
     }
 
@@ -31,7 +34,10 @@ class QuestionsController extends Controller
      */
     public function create()
     {
+        // Question object for Question model 
         $question = new Question(); 
+
+        // Dispaly Question form
         return view('questions.create', compact('question'));
     }
 
@@ -43,10 +49,10 @@ class QuestionsController extends Controller
      */
     public function store(AskQuestionRequest $request)
     {
-        $request->user()
-                ->questions()
-                ->create($request->only('title', 'body'));
+        // Insert Record
+        $request->user()->questions()->create($request->only('title', 'body'));
 
+        // Redirect to all questions page.
         return redirect()->route('questions.index')->with('success', 'Your question has been submitted.'); 
     }
 
@@ -58,6 +64,7 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
+        // Display question details
         return view('questions.show')->with('question', $question); 
     }
 
@@ -71,10 +78,8 @@ class QuestionsController extends Controller
     {
         // Authentication
         $this->authorize("update", $question); 
-        // if(\Gate::denies('update-question', $question)){
-        //     abort(403, 'Access Denied!');  
-        // }
 
+        // Show Edit page
         return view('questions.edit', compact('question')); 
     }
 
@@ -89,9 +94,6 @@ class QuestionsController extends Controller
     {
         // Authentication 
         $this->authorize("update", $question);
-        // if(\Gate::denies('update-question', $question)){
-        //     abort(403, 'Access Denied!');  
-        // }
 
         // Validation data
         $data = $request->only('title', 'body');
@@ -113,11 +115,11 @@ class QuestionsController extends Controller
     {
         // Authentication
         $this->authorize("delete", $question); 
-        // if(\Gate::denies('delete-question', $question)){
-        //     abort(403, 'Access Denied!');  
-        // }
 
+        // Delete record 
         $question->delete(); 
+
+        // Redirect to All Questions page.
         return redirect('/questions')->with('success', 'Your question has been deleted.'); 
     }
 }
