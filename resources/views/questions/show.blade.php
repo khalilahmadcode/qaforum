@@ -8,11 +8,11 @@
                 <div class="card-body">
                     <div class="card-title">
                         <div class="d-flex align-item-center">
-                            <h1>{{  $question->id.'-'.$question->title }}</h1>
+                            <h1>{{ $question->title }}</h1>
                             
-                            <div class="ml-auto">
+                            {{-- <div class="ml-auto">
                                 <a href="{{ route('questions.index') }}" class="btn btn-outline-secondary">Back to all Question</a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>  {{--  card-title --}}
 

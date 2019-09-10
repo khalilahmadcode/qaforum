@@ -35,21 +35,32 @@
                             </div>
                             <div class="media-body">
                                 <div class="d-flex align-item-center">
-                                    <h3 class="mt-0">{{ $question->title }}</h3>
-                                    <div class="ml-auto">
-                                        {{-- Authentication for updating question --}}
-                                        @can('update', $question)
-                                            <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
-                                        @endcan
+                                    <div class="row">
+
+                                        {{-- title --}}
+                                        <div class="col-sm-12 col-md-10">
+                                            <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
+                                        </div>
+
+                                        {{-- buttons --}}
+                                        <div class="col-sm-12 col-md-2">
+                                            <div class="ml-auto">
+                                                {{-- Authentication for updating question --}}
+                                                @can('update', $question)
+                                                    <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
+                                                @endcan
+                                                
+                                                {{-- Authentication for deleting question --}}
+                                                @can('delete', $question)
+                                                    <form class="form-delete" action="{{ route('questions.destroy', $question->id) }}" method="post">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                                    </form>
+                                                @endcan
+                                            </div>
+                                        </div>
                                         
-                                        {{-- Authentication for deleting question --}}
-                                        @can('delete', $question)
-                                            <form class="form-delete" action="{{ route('questions.destroy', $question->id) }}" method="post">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>
-                                        @endcan
                                     </div>
                                 </div>
                                 
@@ -59,7 +70,7 @@
                                     <small class="text-muted">{{ $question->created_date }}</small>
                                 </p>
 
-                                {{ str_limit($question->body, 250) }} <a href="{{ $question->url }}"> Read more</a>
+                                {{ str_limit($question->body, 250) }}
                             </div>
                         </div>
                         <hr>
