@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model; 
-use App\question; 
+use App\Question; 
 use App\User; 
 
 class Answer extends Model
 {
+    protected $fillable = ['body', 'user_id']; 
+
     // Relationship with User
     public function user () {
         return $this->belongsTo(User::class);

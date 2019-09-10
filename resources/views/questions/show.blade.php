@@ -4,7 +4,6 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-
             <div class="card">
                 <div class="card-body">
                     <div class="card-title">
@@ -51,45 +50,13 @@
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title">
-                        <h2>{{ $question->answers_count. " ". str_plural('Answer', $question->answers_count) }}</h2>
-                    </div>
-                    <hr>
-                    @Foreach ($question->answers as $answer)
-                        <div class="media">
-                            <div class="d-flex flex-column vote-controls ">
-                                <a href="" title="This answer is useful" class="vote-up">
-                                    <i class="fas fa-caret-up fa-3x" ></i>
-                                </a>
-                                <span class="votes-count">123</span>
-                                <a href="" title="This answer is not useful" class="vote-up off">
-                                    <i class="fas fa-caret-down fa-3x"></i>
-                                </a>
-    
-                                <a href="" title="Mark this as best answer" class="vote-accepted mt-2">
-                                    <i class="fas fa-check fa-lg"></i>
-                                </a>
-                            </div> {{-- votes controls --}}
+    @include('answers._answers', [
+        'answers'=> $question->answers,
+        'answersCount'=>$question->answers_count 
+    ])
 
-                            <div class="media-body">
-                                {!! $answer->body_html !!}
-                                <div class="float-right">
-                                    <span class="text-muted">
-                                        Answered {{ $answer->created_date }} 
-                                        <span class="text-muted ml-1">by </span> <a href="{{ $answer->user->url }}">{{ $answer->user->name }}</a>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
+    {{-- Answer form --}}
+    @include('answers._create')
+    
 </div>
 @endsection
