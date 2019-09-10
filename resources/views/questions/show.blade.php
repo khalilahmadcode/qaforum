@@ -16,6 +16,39 @@
 
                 <div class="card-body text-justify">
                     {!! $question->body_html !!}
+                    <div class="float-right">
+                        <span class="text-muted">
+                            Questioned {{ $question->created_date }} 
+                            <span class="text-muted ml-1">by </span> <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h2>{{ $question->answers_count. " ". str_plural('Answer', $question->answers_count) }}</h2>
+                    </div>
+                    <hr>
+                    @Foreach ($question->answers as $answer)
+                        <div class="media">
+                            <div class="media-body">
+                                {!! $answer->body_html !!}
+                                <div class="float-right">
+                                    <span class="text-muted">
+                                        Answered {{ $answer->created_date }} 
+                                        <span class="text-muted ml-1">by </span> <a href="{{ $answer->user->url }}">{{ $answer->user->name }}</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    @endforeach
                 </div>
             </div>
         </div>

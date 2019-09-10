@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model; 
 use App\question; 
 use App\User; 
 
@@ -18,6 +18,11 @@ class Answer extends Model
         return $this->belongsTo(Question::class); 
     }
 
+    // Question Created date used in blade
+    public function getCreatedDateAttribute() {
+        return $this->created_at->diffForHumans();  
+    }
+    
     // Display answer body as html format used in blade.
     public function getBodyHtmlAttribute () {
         return \Parsedown::instance()->text($this->body); 

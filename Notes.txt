@@ -73,3 +73,12 @@ $ php artisan make:migration rename_answers_in_questions_table --table=questions
 -- install Doctorin dependency--
 $ composer require doctrine/dbal
 
+Answer Factory 
+$ php artisan make:factory AnswerFactory 
+After make factory in the above file run below command: 
+$ php artisan migrate:fresh --seed 
+
+
+********************************************************************************************************
+
+avatar 

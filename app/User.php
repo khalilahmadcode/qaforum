@@ -54,4 +54,12 @@ class User extends Authenticatable
         return '#'; 
     }
 
+
+    // User image avatar
+    // public function getAvatarAttribute() {
+    //     $email=$this->email; 
+    //     $size=32; 
+    //     return 
+    // }
+
 }
