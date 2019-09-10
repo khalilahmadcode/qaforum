@@ -82,3 +82,13 @@ $ php artisan migrate:fresh --seed
 ********************************************************************************************************
 
 avatar 
+********************************************************************************************************
+
+Installation of Font-awsome 5
+1. CDN 
+2. Download 
+3. Using npm 
+ - $ npm i @fortawesome/fontawesome @fortawesome/fontawesome-free-solid -D
+ - craete fontawesome.js file in resources/js/ 
+ - include it in /resource/js/app.js require('./fontawesome'); 
+ - run: $ npm run watch
