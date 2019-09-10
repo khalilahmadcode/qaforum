@@ -27,7 +27,7 @@
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
 
-                            <a href="" title="Mark this as best answer" class="vote-accepted mt-2">
+                            <a href="" title="Mark this as best answer" class="{{ $answer->status }} mt-2">
                                 <i class="fas fa-check fa-lg"></i>
                             </a>
                         </div> 
@@ -36,11 +36,28 @@
                         {{-- Answers Content --}}
                         <div class="media-body">
                             {!! $answer->body_html !!}
-                            <div class="float-right">
-                                <span class="text-muted">
-                                    Answered {{ $answer->created_date }} 
-                                    <span class="text-muted ml-1">by </span> <a href="{{ $answer->user->url }}">{{ $answer->user->name }}</a>
-                                </span>
+                            
+                            <div class="d-flex align-item-center mt-4">
+                                {{-- Authentication for updating answer --}}
+                                @can('update', $answer)
+                                    <a href="{{ route('questions.answers.edit', [$question->id, $answer->id]) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                                @endcan
+                                
+                                {{-- Authentication for deleting answer --}}
+                                @can('delete', $answer)
+                                    <form class="form-delete" action="{{ route('questions.answers.destroy', [$question->id, $answer->id]) }}" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-outline-danger ml-1" onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+                                @endcan
+
+                                <div class="ml-auto">
+                                    <span class="text-muted">
+                                        Answered {{ $answer->created_date }} 
+                                        <span class="text-muted ml-1">by </span> <a href="{{ $answer->user->url }}">{{ $answer->user->name }}</a>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         {{-- /Answers Content --}}

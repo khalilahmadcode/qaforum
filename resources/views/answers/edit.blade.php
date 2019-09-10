@@ -2,22 +2,24 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row mt-4 justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
+                    
                     <div class="card-title">
                         <div class="d-flex align-item-center">
-                            <h1>{{  $question->id.'-'.$question->title }}</h1>
+                            <h1>{{ $question->title }}</h1>
                             
                             <div class="ml-auto">
-                                <a href="{{ route('questions.index') }}" class="btn btn-outline-secondary">Back to all Question</a>
+                                <a href="{{ $question->url }}" class="btn btn-outline-secondary">Back to all Answers</a>
                             </div>
                         </div>
                     </div>  {{--  card-title --}}
-
+    
                     <hr>
 
+                    {{-- media --}}
                     <div class="media text-justify">
                         <div class="d-flex flex-column vote-controls ">
                             <a href="" title="This question is useful" class="vote-up">
@@ -44,19 +46,34 @@
                             </div>
                         </div>
                     </div> {{-- media --}}
-                </div>  {{-- card-body --}}
-            </div> {{-- card-body --}}
 
+                    <hr>
+                    <h3>Update Your Answer</h3>
+                    {{-- Answers Form --}}
+                    <form action="{{ route( 'questions.answers.update', [$question->id, $answer->id] ) }}" method="post">
+                        @csrf
+                        @method('PATCH')
+
+                        <div class="form-group">
+                            <textarea name="body" class="form-control {{ $errors->has('body') ? 'is-invalid':'' }}" id="" rows="5">{{$answer->body}}</textarea>
+                            
+                            {{-- error --}}
+                            @if ($errors->has('body'))
+                                <div class="invalid-feedback"><strong>{{ $errors->first('body') }}</strong>
+                                    {{ old('body', $answer->body ) }}
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <button type='submit' class="btn btn-outline-primary">Update</button>
+                        </div>
+
+                    </form>
+                    {{-- /Answer Form --}}
+                </div>
+            </div>
         </div>
     </div>
-
-    @include('answers._answers', [
-        'answers'=> $question->answers,
-        'answersCount'=>$question->answers_count 
-    ])
-
-    {{-- Answer form --}}
-    @include('answers._create')
-    
 </div>
 @endsection
