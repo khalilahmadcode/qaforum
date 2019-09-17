@@ -54,12 +54,8 @@ class User extends Authenticatable
         return '#'; 
     }
 
-
-    // User image avatar
-    // public function getAvatarAttribute() {
-    //     $email=$this->email; 
-    //     $size=32; 
-    //     return 
-    // }
-
+    // Relationship with user's favorites questions table
+    public function favorites () {
+        return $this->belongsToMany(Question::class, 'favorites')->withTimestamps(); //, 'user_id', 'question_id'); 
+    }
 }

@@ -59,4 +59,23 @@ class Question extends Model
         
     }
 
+    // Relationship with user favorites questoins 
+    public function favorites() {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps(); //, 'question_id', 'user_id'); 
+    }
+
+    // Favorited Question
+     public function isFavorited () {
+        return $this->favorites()->where('user_id', auth()->id())->count() > 0; 
+    }
+
+    // Check if the question is favorited already. 
+    public function getIsFavoritedAttribute() {
+       return $this->isFavorited(); 
+    }
+
+    // Favorite count
+    public function getFavoritesCountAttribute() {
+       return $this->favorites->count(); 
+    } 
 }
