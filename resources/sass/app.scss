@@ -85,3 +85,10 @@
         }
     }
 }
+
+.post {
+    padding: 30px 0; 
+    &:not(:last-child){
+        border-bottom:1px solid rgba($black, 0.1);
+    }
+}

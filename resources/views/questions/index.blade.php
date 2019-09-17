@@ -20,31 +20,35 @@
                     @include('layouts._messages')
 
                     {{-- Quetions --}}
-                    @foreach ($questions as $question)
-                        <div class="media">
+                    @forelse ($questions as $question)
+                        <div class="media post">
                             <div class="d-flex flex-column counters">
+                                {{-- votes count --}}
                                 <div class="vote">
-                                    <strong>{{ $question->votes_count }}</strong>{{ str_plural('vote', $question->votes_count ) }}
+                                    <strong>{{ $question->votes_count }}</strong>{{ str_plural('Vote', $question->votes_count ) }}
                                 </div>
+                                {{-- answers count --}}
                                 <div class="status {{ $question->status }}">
-                                    <strong>{{ $question->answers_count  }}</strong>{{ str_plural('answer', $question->answers_count) }}
+                                    <strong>{{ $question->answers_count  }}</strong>{{ str_plural('Answer', $question->answers_count) }}
                                 </div>
+                                {{-- Views count --}}
                                 <div class="view">
                                    {{ $question->views  . " ". str_plural('View', $question->views) }}
                                 </div>
                             </div>
+
                             <div class="media-body">
-                                <div class="d-flex align-item-center">
+                                <div class="align-item-center">
                                     <div class="row">
 
                                         {{-- title --}}
-                                        <div class="col-sm-12 col-md-10">
+                                        <div class="col-sm-12 col-md-9">
                                             <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
                                         </div>
 
                                         {{-- buttons --}}
-                                        <div class="col-sm-12 col-md-2">
-                                            <div class="ml-auto">
+                                        <div class="col-sm-12 col-md-3 text-right">
+                                            <div class="">
                                                 {{-- Authentication for updating question --}}
                                                 @can('update', $question)
                                                     <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
@@ -60,24 +64,27 @@
                                                 @endcan
                                             </div>
                                         </div>
-                                        
                                     </div>
                                 </div>
                                 
-                                <p class="lead">
-                                    Asked By 
-                                    <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
-                                    <small class="text-muted">{{ $question->created_date }}</small>
-                                </p>
-
-                                {{ str_limit($question->body, 250) }}
+                                {{-- author --}}
+                                @include('share._author', [
+                                    'model'=>$question, 
+                                    'label'=>'Questioned'
+                                ])
+                                
+                                {{-- question body --}}
+                                {{ $question->excerpt(300) }}
                             </div>
                         </div>
-                        <hr>
-                    @endforeach
-                    <div class="mx-auto">
-                        {{ $questions->links() }}
-                    </div>
+                        
+                        @empty
+                            <div class="alert alert-warning">
+                                <strong>Sorry. There is no Question available.</strong>
+                            </div>
+                        
+                    @endforelse
+                    {{ $questions->links() }}
                 </div>
             </div>
         </div>

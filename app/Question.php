@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+    // votableTrait.php
+    use VotableTrait; 
+    
     // Question table fields goes here.
     protected $fillable = ['title', 'body']; 
 
@@ -17,7 +20,7 @@ class Question extends Model
 
     // Relationship to Answer
     public function answers() {
-        return $this->hasMany(Answer::class); 
+        return $this->hasMany(Answer::class)->orderBy('votes_count', 'DESC'); 
     }
 
     // Setting title and slug 
@@ -49,7 +52,7 @@ class Question extends Model
 
     // Display question body as html format used in blade.
     public function getBodyHtmlAttribute () {
-        return \Parsedown::instance()->text($this->body); 
+        return $this->htmlBody();
     }
 
     public function acceptBestAnswer(Answer $answer) {
@@ -79,18 +82,15 @@ class Question extends Model
        return $this->favorites->count(); 
     } 
 
-    // Relationship with Votes
-    public function votes () {
-        return $this->morphToMany(User::class, 'votable'); 
+    public function getExcerptAttribute() {
+        return $this->excerpt(250);
     }
 
-    // Votes up
-    public function upVotes() {
-        return $this->votes()->wherePivot('vote', 1);
+    public function excerpt($length) {
+        return str_limit(strip_tags($this->htmlBody()), $length);
     }
 
-    // Votes down
-    public function downVotes() {
-        return $this->votes()->wherePivot('vote', -1);
+    private function htmlBody() {
+        return \Parsedown::instance()->text($this->body); 
     }
 }

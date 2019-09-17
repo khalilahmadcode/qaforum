@@ -13,9 +13,13 @@ class voteQuestionController extends Controller
     // auto call function 
     public function __invoke(Question $question) {
         $vote = (int) request()->vote; 
-        
-        auth()->user()->voteQuestion($question, $vote);
+        $auth = auth()->user(); 
 
+        if($auth ) {
+            $auth->voteQuestion($question, $vote);
+        } else {
+            return redirect('/login'); 
+        } 
         return back(); 
     }
 }

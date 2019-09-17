@@ -15,8 +15,13 @@ class VoteAnswerController extends Controller
     // Auto call function to save the votes for answers. 
     public function __invoke(Answer $answer) {
         $vote = (int) request()->vote;
-        
-        auth()->user()->voteAnswer($answer, $vote);
+        $auth = auth()->user(); 
+
+        if($auth ) { // if user authenticated.
+            $auth->voteAnswer($answer, $vote);
+        } else { // if user not logged in
+            return redirect('/login'); 
+        } 
         return back(); 
     }
 }
