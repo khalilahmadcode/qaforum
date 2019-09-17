@@ -19,15 +19,31 @@
                     <div class="media">
                         {{-- Votes controls --}}
                         <div class="d-flex flex-column vote-controls ">
-                            <a href="" title="This answer is useful" class="vote-up">
+                            {{-- vote up --}}
+                            <a title="This answer is useful" class="vote-up {{ Auth::guest() ? 'off' : '' }}"
+                            onclick="event.preventDefault(); document.getElementById('up-vote-answer-{{ $answer->id }}').submit();">
                                 <i class="fas fa-caret-up fa-3x" ></i>
                             </a>
-                            <span class="votes-count">123</span>
-                            <a href="" title="This answer is not useful" class="vote-up off">
+                            <form action="/answers/{{ $answer->id }}/vote" id="up-vote-answer-{{ $answer->id }}" method="POST" style="display:none;">
+                                @csrf
+                                <input type="hidden" name="vote" value="1">
+                            </form>
+                            
+
+                            {{-- vote count --}}
+                            <span class="votes-count">{{ $answer->votes_count }}</span>
+
+                            {{-- vote down --}}
+                            <a title="This answer is not useful" class="vote-up {{ Auth::guest() ? 'off' : '' }}" 
+                            onclick="event.preventDefault(); document.getElementById('down-vote-answer-{{ $answer->id }}').submit();">
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
+                            <form action="/answers/{{ $answer->id }}/vote" id="down-vote-answer-{{ $answer->id }}" method="POST" style="display:none;">
+                                @csrf
+                                <input type="hidden" name="vote" value="-1">
+                            </form>
 
-                            {{-- best anser: who can do it --}}
+                            {{-- mark as best answer --}}
                             @can('accept', $answer)
                                 <a title="Mark this as best answer" 
                                     class="{{ $answer->status }} mt-2"

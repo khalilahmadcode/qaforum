@@ -78,4 +78,19 @@ class Question extends Model
     public function getFavoritesCountAttribute() {
        return $this->favorites->count(); 
     } 
+
+    // Relationship with Votes
+    public function votes () {
+        return $this->morphToMany(User::class, 'votable'); 
+    }
+
+    // Votes up
+    public function upVotes() {
+        return $this->votes()->wherePivot('vote', 1);
+    }
+
+    // Votes down
+    public function downVotes() {
+        return $this->votes()->wherePivot('vote', -1);
+    }
 }
